@@ -5,14 +5,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.tika.Tika;
+
+import com.identityE2E.persistence.repositories.ExcelFileReader;
+
 public class FileUtility {
+	
+	final static Logger LOGGER = Logger.getLogger(FileUtility.class);
+	
+	private Tika tikaObj = new Tika();
+
 
 	public String getMimeType(File file) {
+		LOGGER.info("In FileUtility getMimeType of" + file.getName());
 		String mimeType;
 		try {
-			mimeType= Files.probeContentType(file.toPath());
-		}
-		catch (IOException ex){
+			mimeType = tikaObj.detect(file);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			mimeType = null;
 		}
 		return mimeType;
@@ -44,7 +55,7 @@ public class FileUtility {
 		String mimeType = getMimeType(file);
 		
 //		return "File: name: '"+ fileName + "' extension: '" + fileExtension + "' size: '" + fileSize + "' mime-type: '" + mimeType + "'" ; 
-		return "File: name: "+ fileName + " extension: " + fileExtension + " size: " + fileSize + " mime-type: " + mimeType + "" ; 
+		return "\n"+"File: name: "+ fileName +"\n"+ " extension: " + fileExtension + "\n" +" size: " + fileSize +"\n" + " mime-type: " + mimeType + "" ; 
 	}
 	
 	public String convertFilesListToString(List<File> filesList){

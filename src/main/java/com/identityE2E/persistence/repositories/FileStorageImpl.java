@@ -4,11 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 
-import com.identityE2E.persistence.repositories.FileStorage;
 import com.identityE2E.util.FileUtility;
+
+
+
 
 public class FileStorageImpl implements FileStorage{
 
@@ -67,8 +68,9 @@ public class FileStorageImpl implements FileStorage{
 		for(File file: allFiles) {
 			String fileMimeType = fileUtility.getMimeType(file);
 			LOGGER.debug("searching : " + file + ": mime type: " + fileUtility.getMimeType(file));
-			if(fileMimeType.equals(mimeType))
-			filesWithMimeType.add(file);
+			if(fileMimeType.equals(mimeType)){
+				filesWithMimeType.add(file);
+			}
 		}
 		
 		LOGGER.debug("the following files wtih mime type returned are : "+ filesWithMimeType);
@@ -83,7 +85,7 @@ public class FileStorageImpl implements FileStorage{
 		excelFiles.addAll(getByMimeType("application/vnd.ms-excel"));
 		excelFiles.addAll(getByMimeType("application/msexcel"));
 		excelFiles.addAll(getByMimeType("application/x-msexcel"));
-		
+		excelFiles.addAll(getByMimeType("application/octet-stream"));
 		
 		LOGGER.debug("the excel files returned are :" + excelFiles);
 		return excelFiles;
@@ -104,5 +106,6 @@ public class FileStorageImpl implements FileStorage{
 		
 		return filesWithExtension;
 	}
+	
 	
 }
