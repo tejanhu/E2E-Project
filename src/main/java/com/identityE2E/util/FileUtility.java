@@ -22,6 +22,9 @@ public class FileUtility {
 		String mimeType;
 		try {
 			mimeType = tikaObj.detect(file);
+			if(mimeType.equals("application/octet-stream")){
+				mimeType = "application/vnd.ms-excel";
+			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 			mimeType = null;
